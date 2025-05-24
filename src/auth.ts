@@ -1,207 +1,7 @@
 
+
 // // src/auth.ts
 
-
-// import NextAuth from 'next-auth';
-// import Credentials from 'next-auth/providers/credentials';
-// import { authConfig } from './auth.config';
-// import { sql } from '@vercel/postgres';
-// import { User, UserRole } from './lib/definitions';
-// import bcrypt from 'bcryptjs';
-// import { LoginFormSchema } from './lib/schemas';
-
-// async function getUserByEmail(email: string): Promise<User | undefined> {
-//   try {
-//     const user = await sql<User>`SELECT * FROM users WHERE email=${email} LIMIT 1`;
-//     return user.rows[0];
-//   } catch (error) {
-//     console.error('Failed to fetch user:', error);
-//     throw new Error('Failed to fetch user.');
-//   }
-// }
-
-// export const { auth, signIn, signOut } = NextAuth({
-//   ...authConfig,
-//   session: {
-//     strategy: "jwt",
-//     maxAge: 30 * 24 * 60 * 60, // 30 days
-//   },
-//   providers: [
-//     Credentials({
-//       name: 'Credentials',
-//       credentials: {
-//         email: { label: "Email", type: "email" },
-//         password: { label: "Password", type: "password" }
-//       },
-//       async authorize(credentials) {
-//         try {
-//           const parsedCredentials = LoginFormSchema.safeParse(credentials);
-          
-//           if (!parsedCredentials.success) {
-//             return null;
-//           }
-
-//           const { email, password } = parsedCredentials.data;
-//           const user = await getUserByEmail(email);
-          
-//           if (!user) {
-//             return null;
-//           }
-
-//           const passwordsMatch = await bcrypt.compare(password, user.password);
-//           if (!passwordsMatch) {
-//             return null;
-//           }
-
-//           return {
-//             id: user.id,
-//             email: user.email,
-//             name: user.name,
-//             role: user.role
-//           };
-          
-//         } catch (error) {
-//           console.error('Authorization error:', error);
-//           return null;
-//         }
-//       },
-//     }),
-//   ],
-//   callbacks: {
-//     async jwt({ token, user }) {
-//       if (user) {
-//         token.id = user.id;
-//         token.role = user.role;
-//       }
-//       return token;
-//     },
-//     async session({ session, token }) {
-//       if (session.user) {
-//         session.user.id = token.id as string;
-//         session.user.role = token.role as UserRole;
-//       }
-//       return session;
-//     },
-//     async redirect({ url, baseUrl }) {
-//       // Allows relative callback URLs
-//       if (url.startsWith("/")) return `${baseUrl}${url}`
-//       // Allows callback URLs on the same origin
-//       else if (new URL(url).origin === baseUrl) return url
-//       return baseUrl
-//     }
-//   }
-// });
-
-
-
-
-
-
-
-
-
-
-// import NextAuth from 'next-auth';
-// import Credentials from 'next-auth/providers/credentials';
-// import { authConfig } from './auth.config';
-// import { sql } from '@vercel/postgres';
-// import { User, UserRole } from './lib/definitions';
-// import bcrypt from 'bcryptjs';
-// import { LoginFormSchema } from './lib/schemas';
-
-// async function getUserByEmail(email: string): Promise<User | undefined> {
-//   try {
-//     const user = await sql<User>`SELECT * FROM users WHERE email=${email} LIMIT 1`;
-//     return user.rows[0];
-//   } catch (error) {
-//     console.error('Failed to fetch user:', error);
-//     throw new Error('Failed to fetch user.');
-//   }
-// }
-
-// export const { auth, signIn, signOut } = NextAuth({
-//   ...authConfig,
-//   session: {
-//     strategy: "jwt",
-//     maxAge: 30 * 24 * 60 * 60, // 30 days
-//   },
-//   providers: [
-//     Credentials({
-//       name: 'Credentials',
-//       credentials: {
-//         email: { label: "Email", type: "email" },
-//         password: { label: "Password", type: "password" }
-//       },
-//       async authorize(credentials) {
-//         try {
-//           const parsedCredentials = LoginFormSchema.safeParse(credentials);
-          
-//           if (!parsedCredentials.success) {
-//             return null;
-//           }
-
-//           const { email, password } = parsedCredentials.data;
-//           const user = await getUserByEmail(email);
-          
-//           if (!user) {
-//             return null;
-//           }
-
-//           const passwordsMatch = await bcrypt.compare(password, user.password);
-//           if (!passwordsMatch) {
-//             return null;
-//           }
-
-//           return {
-//             id: user.id,
-//             email: user.email,
-//             name: user.name,
-//             role: user.role
-//           };
-          
-//         } catch (error) {
-//           console.error('Authorization error:', error);
-//           return null;
-//         }
-//       },
-//     }),
-//   ],
-//   callbacks: {
-//     async jwt({ token, user }) {
-//       if (user) {
-//         token.id = user.id;
-//         token.role = user.role;
-//         token.name = user.name;
-//       }
-//       return token;
-//     },
-//     async session({ session, token }) {
-//       if (session.user) {
-//         session.user.id = token.id as string;
-//         session.user.role = token.role as UserRole;
-//         session.user.name = token.name as string;
-//       }
-//       return session;
-//     },
-//     async redirect({ url, baseUrl }) {
-//       if (url.startsWith("/")) return `${baseUrl}${url}`
-//       else if (new URL(url).origin === baseUrl) return url
-//       return baseUrl
-//     }
-//   }
-// });
-
-
-
-
-
-
-
-
-
-
-// src/auth.ts
-// src/auth.ts
 // import NextAuth from 'next-auth';
 // import Credentials from 'next-auth/providers/credentials';
 // import { authConfig } from './auth.config';
@@ -222,9 +22,13 @@
 
 // export const { handlers, auth, signIn, signOut } = NextAuth({
 //   ...authConfig,
-//   trustHost: true, // Important for proper URL generation
+//   trustHost: true,
 //   secret: process.env.AUTH_SECRET,
-//   session: { strategy: "jwt" },
+//   session: { 
+//     strategy: "jwt",
+//     maxAge: 30 * 24 * 60 * 60, // 30 days
+//     updateAge: 24 * 60 * 60, // 24 hours
+//   },
 //   providers: [
 //     Credentials({
 //       async authorize(credentials) {
@@ -266,6 +70,13 @@
 //       }
 //       return session;
 //     },
+//     async redirect({ url, baseUrl }) {
+//       // Redirect to dashboard after successful login
+//       if (url.startsWith('/login')) {
+//         return `${baseUrl}/dashboard`;
+//       }
+//       return url.startsWith('/') ? `${baseUrl}${url}` : url;
+//     }
 //   },
 // });
 
@@ -276,7 +87,11 @@
 
 
 
-// src/auth.ts
+
+
+
+
+
 import NextAuth from 'next-auth';
 import Credentials from 'next-auth/providers/credentials';
 import { authConfig } from './auth.config';
@@ -293,6 +108,14 @@ async function getUser(email: string): Promise<User | undefined> {
     console.error('Failed to fetch user:', error);
     throw new Error('Failed to fetch user.');
   }
+}
+
+// Helper function to get base URL
+function getBaseUrl() {
+  if (process.env.VERCEL_URL) {
+    return `https://${process.env.VERCEL_URL}`;
+  }
+  return process.env.NEXTAUTH_URL || 'http://localhost:3000';
 }
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
@@ -346,11 +169,21 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       return session;
     },
     async redirect({ url, baseUrl }) {
-      // Redirect to dashboard after successful login
+      // Use our dynamic base URL instead of the parameter
+      const siteUrl = getBaseUrl();
+      
+      // Handle login redirect
       if (url.startsWith('/login')) {
-        return `${baseUrl}/dashboard`;
+        return `${siteUrl}/dashboard`;
       }
-      return url.startsWith('/') ? `${baseUrl}${url}` : url;
+      
+      // Handle logout redirect
+      if (url === '/logout') {
+        return `${siteUrl}/login`;
+      }
+      
+      // Default behavior
+      return url.startsWith('/') ? `${siteUrl}${url}` : url;
     }
   },
 });
