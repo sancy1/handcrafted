@@ -1,32 +1,38 @@
 
 
-'use client';
-
 // src/components/auth/user-dropdown.tsx
+
 'use client';
 
-import { signOut } from '../../auth';
-import { UserCircleIcon, ArrowRightOnRectangleIcon } from '@heroicons/react/24/outline';
+import { signOut } from 'next-auth/react';
+import { UserCircleIcon, ArrowRightOnRectangleIcon, HomeIcon, Squares2X2Icon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 import { useState, useRef, useEffect } from 'react';
 
 export default function UserDropdown({ name }: { name: string }) {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
-  let timeoutId: NodeJS.Timeout;
+  let hoverTimeout: NodeJS.Timeout;
 
   const handleMouseEnter = () => {
-    clearTimeout(timeoutId);
+    clearTimeout(hoverTimeout);
     setIsOpen(true);
   };
 
   const handleMouseLeave = () => {
-    timeoutId = setTimeout(() => {
+    hoverTimeout = setTimeout(() => {
       setIsOpen(false);
-    }, 300); // 300ms delay before closing
+    }, 200); // 200ms delay before closing
   };
 
-  // Close dropdown when clicking outside
+  const handleDropdownMouseEnter = () => {
+    clearTimeout(hoverTimeout);
+  };
+
+  const handleDropdownMouseLeave = () => {
+    setIsOpen(false);
+  };
+
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
@@ -37,7 +43,7 @@ export default function UserDropdown({ name }: { name: string }) {
     document.addEventListener('mousedown', handleClickOutside);
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
-      clearTimeout(timeoutId);
+      clearTimeout(hoverTimeout);
     };
   }, []);
 
@@ -49,8 +55,8 @@ export default function UserDropdown({ name }: { name: string }) {
       onMouseLeave={handleMouseLeave}
     >
       <button 
-        onClick={() => setIsOpen(!isOpen)}
         className="flex items-center gap-2 hover:bg-amber-700 p-2 rounded transition-colors"
+        onClick={() => setIsOpen(!isOpen)}
       >
         <UserCircleIcon className="h-6 w-6 text-amber-50" />
         <span className="text-amber-50">{name}</span>
@@ -59,37 +65,37 @@ export default function UserDropdown({ name }: { name: string }) {
       {isOpen && (
         <div 
           className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50"
-          onMouseEnter={handleMouseEnter}
-          onMouseLeave={handleMouseLeave}
+          onMouseEnter={handleDropdownMouseEnter}
+          onMouseLeave={handleDropdownMouseLeave}
         >
           <Link
-            href="/dashboard"
-            className="block px-4 py-2 text-sm text-amber-900 hover:bg-amber-100"
+            href="/"
+            className="flex items-center gap-2 px-4 py-2 text-sm text-amber-900 hover:bg-amber-100"
             onClick={() => setIsOpen(false)}
           >
+            <HomeIcon className="h-4 w-4" />
+            Home
+          </Link>
+          <Link
+            href="/dashboard"
+            className="flex items-center gap-2 px-4 py-2 text-sm text-amber-900 hover:bg-amber-100"
+            onClick={() => setIsOpen(false)}
+          >
+            <Squares2X2Icon className="h-4 w-4" />
             View Dashboard
           </Link>
-          <form
-            action={async () => {
-              await signOut();
-            }}
-            className="w-full"
+          <button
+            onClick={() => signOut()}
+            className="flex items-center gap-2 w-full px-4 py-2 text-sm text-amber-900 hover:bg-amber-100 text-left"
           >
-            <button
-              type="submit"
-              className="flex items-center gap-2 w-full text-left px-4 py-2 text-sm text-amber-900 hover:bg-amber-100"
-            >
-              <ArrowRightOnRectangleIcon className="h-4 w-4" />
-              Logout
-            </button>
-          </form>
+            <ArrowRightOnRectangleIcon className="h-4 w-4" />
+            Logout
+          </button>
         </div>
       )}
     </div>
   );
 }
-
-
 
 
 

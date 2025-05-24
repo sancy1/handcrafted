@@ -11,6 +11,22 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 import { EnvelopeIcon, LockClosedIcon } from '@heroicons/react/24/outline';
+import { useSession } from 'next-auth/react';
+
+// export default function LoginPage() {
+//   const [state, formAction] = useActionState(login, {
+//     errors: {},
+//     message: null,
+//     success: false,
+//     redirectUrl: '/dashboard'
+//   });
+//   const router = useRouter();
+
+//   useEffect(() => {
+//     if (state?.success && state.redirectUrl) {
+//       router.push(state.redirectUrl);
+//     }
+//   }, [state, router]);
 
 export default function LoginPage() {
   const [state, formAction] = useActionState(login, {
@@ -20,12 +36,25 @@ export default function LoginPage() {
     redirectUrl: '/dashboard'
   });
   const router = useRouter();
+  const { status } = useSession();
+
+  useEffect(() => {
+    if (status === 'authenticated') {
+      // Force a hard redirect to ensure full page load
+      window.location.href = '/dashboard';
+    }
+  }, [status]);
 
   useEffect(() => {
     if (state?.success && state.redirectUrl) {
-      router.push(state.redirectUrl);
+      // Use window.location for initial login to ensure full page load
+      window.location.href = state.redirectUrl;
     }
-  }, [state, router]);
+  }, [state]);
+
+  if (status === 'authenticated') {
+    return null; // Will redirect immediately
+  }
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-amber-50">
