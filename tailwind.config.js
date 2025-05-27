@@ -1,33 +1,15 @@
-
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
-    "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/components/**/*.{js,ts,jsx,tsx}",
-    "./src/lib/**/*.{js,ts,jsx,tsx,mdx}",
+    // Corrected paths to include the 'src' directory
+    "./src/app/**/*.{js,ts,jsx,tsx,mdx}",        // For files in src/app/
+    "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",      // If you're using the Pages Router in src/
+    "./src/components/**/*.{js,ts,jsx,tsx,mdx}", // For files in src/components/
+    // Add any other directories where you use Tailwind classes, e.g., for custom hooks, etc.
+    // "./src/**/*.{js,ts,jsx,tsx,mdx}", // A more general catch-all for anything directly in src/
   ],
   theme: {
-    container: {
-    center: true,
-    padding: '1rem',
+    extend: {},
   },
-    extend: {
-      colors: {
-        // Handcrafted Haven brand colors
-        primary: '#5e3a00',    // Earthy brown
-        secondary: '#c69f73',  // Warm cream
-        accent: '#8b5a2b',     // Wood tone
-      },
-      fontFamily: {
-        sans: ['var(--font-inter)'],
-        serif: ['var(--font-cardo)'],
-      },
-      boxShadow: {
-        'artisan': '0 4px 14px rgba(0, 0, 0, 0.1)',
-      }
-    },
-  },
-  plugins: [
-    require('@tailwindcss/typography'), // Optional: for prose content
-  ],
+  plugins: [],
 }

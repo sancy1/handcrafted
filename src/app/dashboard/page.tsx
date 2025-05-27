@@ -1,5 +1,4 @@
 
-
 // src/app/dashboard/page.tsx
 'use client';
 
@@ -19,106 +18,29 @@ export default function Dashboard() {
   }, [status, router]);
 
   if (status === 'loading') {
-    return <div className="p-6">Loading session...</div>;
+    return (
+      <div className="p-6 max-w-4xl mx-auto">
+        <div className="bg-white p-6 rounded-xl shadow-md animate-pulse">
+          <div className="h-8 w-1/3 bg-[#E6E1DC] rounded mb-4"></div>
+          <div className="h-4 w-2/3 bg-[#E6E1DC] rounded"></div>
+        </div>
+      </div>
+    );
   }
 
   if (status !== 'authenticated') {
-    return null; // Will redirect via useEffect
+    return null;
   }
 
   return (
     <div className="p-6">
-      <h1 className="text-2xl font-bold">Dashboard</h1>
       {session?.user && (
         <WelcomeMessage 
           name={session.user.name || 'User'} 
+          email={session.user.email || ''}
           role={session.user.role} 
         />
       )}
     </div>
   );
 }
-
-
-
-
-
-
-// src/app/dashboard/page.tsx
-// import { auth } from '../../auth';
-// import UserDropdown from '../../components/auth/user-dropdown';
-// import LoginButton from '../../components/auth/login-button';
-
-// export default async function Dashboard() {
-//   const session = await auth();
-
-//   return (
-//     <div className="p-6">
-//       <div className="flex justify-between items-center mb-6">
-//         <h1 className="text-2xl font-bold">Dashboard</h1>
-//         <nav>
-//           {session?.user ? (
-//             <UserDropdown name={session.user.name || 'User'} />
-//           ) : (
-//             <LoginButton />
-//           )}
-//         </nav>
-//       </div>
-//       <p>Welcome to your dashboard!</p>
-//     </div>
-//   );
-// }
-
-
-
-// src/app/dashboard/page.tsx
-// import { auth } from '../../auth';
-// import UserDropdown from '../../components/auth/user-dropdown';
-// import LoginButton from '../../components/auth/login-button';
-
-// export default async function Dashboard() {
-//   const session = await auth();
-
-//   return (
-//     <div className="p-6">
-//       <div className="flex justify-between items-center mb-6">
-//         <h1 className="text-2xl font-bold">Dashboard</h1>
-//         <nav>
-//           {session?.user ? (
-//             <UserDropdown name={session.user.name || 'User'} />
-//           ) : (
-//             <LoginButton />
-//           )}
-//         </nav>
-//       </div>
-//       <p>Welcome to your dashboard!</p>
-//     </div>
-//   );
-// }
-
-
-
-// src/app/dashboard/page.tsx
-// import { auth } from '../../auth';
-// import UserDropdown from '../../components/auth/user-dropdown';
-// import LoginButton from '../../components/auth/login-button';
-
-// export default async function Dashboard() {
-//   const session = await auth();
-
-//   return (
-//     <div className="p-6">
-//       <div className="flex justify-between items-center mb-6">
-//         <h1 className="text-2xl font-bold">Dashboard</h1>
-//         <nav>
-//           {session?.user ? (
-//             <UserDropdown name={session.user.name || 'User'} />
-//           ) : (
-//             <LoginButton />
-//           )}
-//         </nav>
-//       </div>
-//       <p>Welcome to your dashboard!</p>
-//     </div>
-//   );
-// }
