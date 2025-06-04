@@ -853,18 +853,13 @@
 
 // src/lib/data/artisans.ts:
 
-
-// src/lib/data/artisans.ts:
-
 'use server';
 
 import { fetchProfileByUserId } from './profile';
 import { unstable_noStore as noStore } from 'next/cache';
 import prisma from '@/lib/prisma';
 import { ArtisanProfile, ArtisanProfileFormData } from '@/lib/definitions';
-// CORRECTED IMPORT: Remove direct import of User and ArtisanProfile
-// import { User, ArtisanProfile as PrismaArtisanProfile } from '@prisma/client';
-import { Prisma } from '@prisma/client'; // Keep this import for the Prisma namespace and utility types
+import { Prisma } from '@prisma/client'; // Make sure this import is present and correct
 
 // Helper function to safely get string values from FormData
 function getStringValue(formData: FormData, key: string): string | null {
@@ -977,31 +972,31 @@ export async function deleteArtisanProfile(userId: string) {
 // Add this function to your existing artisans data file
 export async function fetchAllArtisanProfiles(): Promise<ArtisanProfile[]> {
   try {
-    const artisans = await prisma.artisanProfile.findMany({
+    // Define the arguments for the query using Prisma.validator
+    // This explicitly tells TypeScript the structure of your query, including the 'user' relation.
+    const artisanWithUserInclude = Prisma.validator<Prisma.ArtisanProfileDefaultArgs>()({
       include: {
         user: {
           select: {
             name: true,
-            email: true
+            email: true,
           },
         },
       },
     });
 
-    // CORRECTED TYPE DEFINITION
-    // Use Prisma.ArtisanProfileGetPayload for precise type based on the query
-    type ArtisanWithSelectedUser = Prisma.ArtisanProfileGetPayload<{
-      include: {
-        user: {
-          select: {
-            name: true;
-            email: true;
-          };
-        };
-      };
-    }>;
+    // Now, fetch the artisans with the defined include
+    const artisans = await prisma.artisanProfile.findMany(artisanWithUserInclude);
 
-    return artisans.map((artisan: ArtisanWithSelectedUser) => ({
+    // Infer the exact payload type using Prisma.ArtisanProfileGetPayload
+    // This type will correctly include the 'user' relation with 'name' and 'email'.
+    type ArtisanQueryResult = Prisma.ArtisanProfileGetPayload<typeof artisanWithUserInclude>;
+
+    // Explicitly type the 'artisan' parameter in the map callback
+    return artisans.map((artisan: ArtisanQueryResult) => ({
+      // The spread operator `...artisan` will now correctly spread the properties
+      // from ArtisanQueryResult, which includes all ArtisanProfile fields
+      // and the 'user' object with 'name' and 'email'.
       ...artisan,
       name: artisan.user.name || '',
       email: artisan.user.email || '',
@@ -1018,31 +1013,6 @@ export async function fetchArtisanProfilesForList() {
   noStore(); // Prevents caching for fresh data
 
   try {
-    // Define the type for the result of findMany with nested select for the list page
-    type ArtisanProfileForListQuery = Prisma.ArtisanProfileGetPayload<{
-      select: {
-        id: true;
-        userId: true;
-        shopName: true;
-        shopDescription: true;
-        location: true;
-        averageRating: true;
-        totalSales: true;
-        isTopArtisan: true;
-        user: {
-          select: {
-            name: true;
-            email: true;
-            profile: {
-              select: {
-                profileImageUrl: true;
-              };
-            };
-          };
-        };
-      };
-    }>;
-
     const artisans = await prisma.artisanProfile.findMany({
       select: {
         id: true,
@@ -1069,7 +1039,7 @@ export async function fetchArtisanProfilesForList() {
 
     // Map to flatten the structure slightly if needed for your component's type,
     // or adjust your component's type to match the nested structure.
-    return artisans.map((artisan: ArtisanProfileForListQuery) => ({ // Explicitly type 'artisan'
+    return artisans.map((artisan) => ({
       ...artisan,
       profileImageUrl: artisan.user?.profile?.profileImageUrl || null,
       userName: artisan.user?.name || null, // ADDED: Flatten user name
