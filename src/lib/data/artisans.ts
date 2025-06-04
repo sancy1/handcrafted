@@ -203,6 +203,7 @@
 
 
 
+
 // src/lib/data/artisans.ts:
 
 'use server';
@@ -211,7 +212,7 @@ import { fetchProfileByUserId } from './profile';
 import { unstable_noStore as noStore } from 'next/cache';
 import prisma from '@/lib/prisma';
 import { ArtisanProfile, ArtisanProfileFormData } from '@/lib/definitions';
-import { Prisma } from '@prisma/client'; // Import Prisma namespace for generated types
+// No need to import Prisma from '@prisma/client' specifically for this type anymore
 
 // Helper function to safely get string values from FormData
 function getStringValue(formData: FormData, key: string): string | null {
@@ -321,18 +322,6 @@ export async function deleteArtisanProfile(userId: string) {
 }
 
 // Add this function to your existing artisans data file
-// Define the type for the result of findMany with user include
-type ArtisanProfileWithUser = Prisma.ArtisanProfileGetPayload<{
-  include: {
-    user: {
-      select: {
-        name: true;
-        email: true;
-      };
-    };
-  };
-}>;
-
 export async function fetchAllArtisanProfiles(): Promise<ArtisanProfile[]> {
   try {
     const artisans = await prisma.artisanProfile.findMany({
@@ -346,8 +335,9 @@ export async function fetchAllArtisanProfiles(): Promise<ArtisanProfile[]> {
       },
     });
 
-    // Explicitly type 'artisan' parameter
-    return artisans.map((artisan: ArtisanProfileWithUser) => ({
+    // Infer the type of 'artisan' directly from the 'artisans' array
+    // This is the most robust way to handle this in TypeScript with Prisma
+    return artisans.map((artisan) => ({
       ...artisan,
       name: artisan.user.name || '',
       email: artisan.user.email || '',
@@ -363,31 +353,6 @@ export async function fetchArtisanProfilesForList() {
   noStore(); // Prevents caching for fresh data
 
   try {
-    // Define the type for the result of findMany with nested select for the list page
-    type ArtisanProfileForListQuery = Prisma.ArtisanProfileGetPayload<{
-      select: {
-        id: true;
-        userId: true;
-        shopName: true;
-        shopDescription: true;
-        location: true;
-        averageRating: true;
-        totalSales: true;
-        isTopArtisan: true;
-        user: {
-          select: {
-            name: true;
-            email: true;
-            profile: {
-              select: {
-                profileImageUrl: true;
-              };
-            };
-          };
-        };
-      };
-    }>;
-
     const artisans = await prisma.artisanProfile.findMany({
       select: {
         id: true,
@@ -414,7 +379,7 @@ export async function fetchArtisanProfilesForList() {
 
     // Map to flatten the structure slightly if needed for your component's type,
     // or adjust your component's type to match the nested structure.
-    return artisans.map((artisan: ArtisanProfileForListQuery) => ({ // Explicitly type 'artisan'
+    return artisans.map((artisan) => ({
       ...artisan,
       profileImageUrl: artisan.user?.profile?.profileImageUrl || null,
       userName: artisan.user?.name || null, // ADDED: Flatten user name
