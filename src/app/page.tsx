@@ -17,7 +17,9 @@ export default function Home() {
           </h1>
 
           <div className="flex flex-col sm:flex-row gap-4">
-            <button className="bg-[#B55B3D] text-white px-6 py-3 rounded font-semibold hover:bg-[#9E4F37]">
+            <button className="bg-[#B55B3D] text-white px-6 py-3 rounded font-semibold hover:bg-[#9E4F37]"
+            onClick={() => router.push('/products')}
+            >
               Explore Products
             </button>
 

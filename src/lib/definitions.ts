@@ -191,3 +191,97 @@ export type ArtisanProfileFormValidationErrors = {
   shippingInfo?: string[];
   returnPolicy?: string[];
 };
+
+
+
+
+
+
+// Product, ProductImage, Review DEFINATIONS
+
+// src/lib/definitions.ts
+
+// Make sure you have 'zod' installed if you're using it for ProductFormSchema
+
+export interface Product {
+  productId: string;
+  sellerId: string;
+  categoryId: string | null;
+  name: string;
+  description: string;
+  price: number; // This remains 'number' in your interface
+  quantityAvailable: number;
+  isFeatured: boolean;
+  isActive: boolean;
+  creationDate: Date;
+  lastUpdated: Date;
+  materialsUsed: string | null;
+  dimensions: string | null;
+  weight: number | null;
+  careInstructions: string | null;
+  tags: any | null;
+  searchVector: string | null;
+  images: ProductImage[];
+  reviews: Review[];
+  seller?: {
+    shopName: string;
+    userId: string;
+    user?: {
+      name: string | null;
+    };
+  };
+}
+
+export interface ProductImage {
+  imageId: string;
+  productId: string;
+  imageUrl: string;
+  isPrimary: boolean;
+  altText: string | null;
+  displayOrder: number;
+  createdAt: Date;
+}
+
+export interface Review {
+  reviewId: string;
+  productId: string;
+  userId: string;
+  rating: number;
+  title: string;
+  comment: string;
+  reviewDate: Date;
+  isApproved: boolean;
+  helpfulCount: number;
+  updatedAt: Date;
+  user?: {
+    name: string | null;
+  };
+}
+
+export type ProductFormData = {
+  name: string;
+  description: string;
+  price: number;
+  quantityAvailable: number;
+  categoryId?: string | null;
+  materialsUsed?: string | null;
+  dimensions?: string | null;
+  weight?: number | null;
+  careInstructions?: string | null;
+  tags?: string | null;
+  imageUrl?: string | null;
+};
+
+export const ProductFormSchema = z.object({
+  name: z.string().min(1, 'Product name is required').max(255),
+  description: z.string().min(1, 'Description is required').max(2000),
+  price: z.number().min(0.01, 'Price must be at least $0.01'),
+  quantityAvailable: z.number().min(1, 'Quantity must be at least 1'),
+  categoryId: z.string().uuid().optional().nullable(),
+  materialsUsed: z.string().max(500).optional().nullable(),
+  dimensions: z.string().max(100).optional().nullable(),
+  weight: z.number().min(0).optional().nullable(),
+  careInstructions: z.string().max(500).optional().nullable(),
+  tags: z.string().optional().nullable(),
+  imageUrl: z.string().url('Must be a valid URL').optional().nullable(),
+});

@@ -1,0 +1,181 @@
+
+
+// src/app/products/page.tsx
+
+// 'use client';
+
+// import { useSession } from 'next-auth/react';
+// import { useState, useEffect } from 'react';
+// import { fetchProductsBySeller } from '@/lib/data/products';
+// import ProductCard from '@/components/products/ProductCard';
+// import Link from 'next/link';
+// import { Button } from '@/components/ui/button';
+// import { PlusIcon } from '@heroicons/react/24/outline';
+
+// export default function ArtisanProductsPage() {
+//   const { data: session } = useSession();
+//   const [products, setProducts] = useState<any[]>([]);
+//   const [loading, setLoading] = useState(true);
+
+//   useEffect(() => {
+//     async function loadProducts() {
+//       if (!session?.user?.id) return;
+      
+//       try {
+//         const data = await fetchProductsBySeller(session.user.id);
+//         setProducts(data);
+//       } catch (error) {
+//         console.error('Failed to load products:', error);
+//       } finally {
+//         setLoading(false);
+//       }
+//     }
+//     loadProducts();
+//   }, [session]);
+
+//   if (loading) {
+//     return (
+//       <div className="p-6">
+//         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+//           {[...Array(4)].map((_, i) => (
+//             <div key={i} className="bg-white rounded-lg shadow-md h-80 animate-pulse"></div>
+//           ))}
+//         </div>
+//       </div>
+//     );
+//   }
+
+//   return (
+//     <div className="p-6">
+//       <div className="flex justify-between items-center mb-6">
+//         <h1 className="text-2xl font-serif font-bold text-[#3E3E3E]">My Products</h1>
+//         <Link href="/products/create">
+//           <Button className="bg-[#B55B3D] hover:bg-[#9E4F37] flex items-center gap-1">
+//             <PlusIcon className="h-4 w-4" />
+//             Add Product
+//           </Button>
+//         </Link>
+//       </div>
+
+//       {products.length === 0 ? (
+//         <div className="bg-white rounded-xl shadow-md overflow-hidden border border-[#E6E1DC] p-6 text-center">
+//           <p className="text-[#6C6C6C] mb-4">You haven't created any products yet.</p>
+//           <Link href="/products/create">
+//             <Button className="bg-[#B55B3D] hover:bg-[#9E4F37]">
+//               Create Your First Product
+//             </Button>
+//           </Link>
+//         </div>
+//       ) : (
+//         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+//           {products.map((product) => (
+//             <ProductCard key={product.productId} product={product} />
+//           ))}
+//         </div>
+//       )}
+//     </div>
+//   );
+// }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// Update src/app/artisans/products/page.tsx
+
+'use client';
+
+import { useSession } from 'next-auth/react';
+import { useState, useEffect } from 'react';
+import { fetchProductsBySeller } from '@/lib/data/products';
+import ProductCard from '@/components/products/ProductCard';
+import Link from 'next/link';
+import { Button } from '@/components/ui/button';
+import { PlusIcon, PencilIcon } from '@heroicons/react/24/outline';
+
+export default function ArtisanProductsPage() {
+  const { data: session } = useSession();
+  const [products, setProducts] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function loadProducts() {
+      if (!session?.user?.id) return;
+      
+      try {
+        const data = await fetchProductsBySeller(session.user.id);
+        setProducts(data);
+      } catch (error) {
+        console.error('Failed to load products:', error);
+      } finally {
+        setLoading(false);
+      }
+    }
+    loadProducts();
+  }, [session]);
+
+  if (loading) {
+    return (
+      <div className="p-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          {[...Array(4)].map((_, i) => (
+            <div key={i} className="bg-white rounded-lg shadow-md h-80 animate-pulse"></div>
+          ))}
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="p-6">
+      <div className="flex justify-between items-center mb-6">
+        <h1 className="text-2xl font-serif font-bold text-[#3E3E3E]">My Products</h1>
+        <Link href="/products/create">
+          <Button className="bg-[#B55B3D] hover:bg-[#9E4F37] flex items-center gap-1">
+            <PlusIcon className="h-4 w-4" />
+            Add Product
+          </Button>
+        </Link>
+      </div>
+
+      {products.length === 0 ? (
+        <div className="bg-white rounded-xl shadow-md overflow-hidden border border-[#E6E1DC] p-6 text-center">
+          <p className="text-[#6C6C6C] mb-4">You haven't created any products yet.</p>
+          <Link href="/products/create">
+            <Button className="bg-[#B55B3D] hover:bg-[#9E4F37]">
+              Create Your First Product
+            </Button>
+          </Link>
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          {products.map((product) => (
+            <div key={product.productId} className="relative">
+              <ProductCard product={product} />
+              <Link 
+                href={`/products/${product.productId}/edit`}
+                className="absolute top-2 right-2 bg-white p-2 rounded-full shadow-md hover:bg-[#F9F4EF]"
+              >
+                <PencilIcon className="h-4 w-4 text-[#B55B3D]" />
+              </Link>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}

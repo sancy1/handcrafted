@@ -37,21 +37,21 @@ CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
 
 -- SellerProfiles table (for artisans/sellers)
-CREATE TABLE IF NOT EXISTS seller_profiles (
-    seller_profile_id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-    user_id UUID UNIQUE NOT NULL REFERENCES users(id) ON DELETE CASCADE,
-    shop_name VARCHAR(255) NOT NULL,
-    shop_description TEXT,
-    average_rating FLOAT DEFAULT 0.0,
-    total_sales INTEGER DEFAULT 0,
-    is_top_artisan BOOLEAN DEFAULT FALSE,
-    social_media_links JSONB,
-    policies TEXT,
-    shipping_info TEXT,
-    return_policy TEXT,
-    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
-);
+-- CREATE TABLE IF NOT EXISTS seller_profiles (
+--     seller_profile_id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+--     user_id UUID UNIQUE NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+--     shop_name VARCHAR(255) NOT NULL,
+--     shop_description TEXT,
+--     average_rating FLOAT DEFAULT 0.0,
+--     total_sales INTEGER DEFAULT 0,
+--     is_top_artisan BOOLEAN DEFAULT FALSE,
+--     social_media_links JSONB,
+--     policies TEXT,
+--     shipping_info TEXT,
+--     return_policy TEXT,
+--     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+--     updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+-- );
 
 
 -- -- Categories table (for product categorization)
