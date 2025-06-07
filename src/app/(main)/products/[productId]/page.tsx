@@ -1,38 +1,4 @@
 
-// // src/app/(main)/products/[productId]/page.tsx
-
-// import { fetchProductById } from '@/lib/data/products';
-// import ProductDetail from '../../../../components/products/ProductDetail';
-// import { notFound } from 'next/navigation';
-
-// export default async function ProductDetailPage({
-//   params,
-// }: {
-//   params: { productId: string };
-// }) {
-//   const product = await fetchProductById(params.productId);
-
-//   if (!product) {
-//     notFound();
-//   }
-
-//   return (
-//     <div className="p-6 max-w-6xl mx-auto">
-//       <ProductDetail product={product} />
-//     </div>
-//   );
-// }
-
-
-
-
-
-
-
-
-
-// src/app/(main)/products/[productId]/page.tsx
-
 // src/app/(main)/products/[productId]/page.tsx
 
 import { fetchProductById } from '@/lib/data/products';

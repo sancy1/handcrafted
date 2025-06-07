@@ -53,14 +53,16 @@ export default function ProductsPage() {
     <div className="p-6">
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-2xl font-serif font-bold text-[#3E3E3E]">All Products</h1>
-        {session?.user?.role === 'artisan' && (
+
+        {/* {session?.user?.role === 'artisan' && (
           <Link href="/products/create">
             <Button className="bg-[#B55B3D] hover:bg-[#9E4F37] flex items-center gap-1">
               <PlusIcon className="h-4 w-4" />
               Add Product
             </Button>
           </Link>
-        )}
+        )} */}
+        
       </div>
 
       {/* Search and Filter (Placeholder) */}
