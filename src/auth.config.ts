@@ -23,7 +23,8 @@ export const authConfig: NextAuthConfig = {
         nextUrl.pathname.startsWith('/products/categories') || // <-- Explicitly protect this specific path
         nextUrl.pathname.startsWith('/products/manage') || 
         nextUrl.pathname.startsWith('/admin') ||  
-        nextUrl.pathname.startsWith('/artisans'); 
+        nextUrl.pathname.startsWith('/artisans') ||
+        nextUrl.pathname.startsWith('/products/create');
         // nextUrl.pathname.startsWith('/artisans/list');
 
       // 1. If it's an authentication page AND the user IS logged in, redirect to dashboard.

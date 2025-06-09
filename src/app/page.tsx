@@ -494,15 +494,15 @@ export default async function Home() {
   const heroSlides = [
     {
       src: '/images/slider/slide1.jpg',
-      alt: 'Handcrafted jewelry on display',
+      alt: 'Handcrafted Pottery on display',
       link: '/products?category=jewelry',
-      title: 'Exquisite Handmade Jewelry'
+      title: 'Exquisite Handmade Pottery'
     },
     {
       src: '/images/slider/slide2.jpg',
-      alt: 'Pottery in a rustic setting',
+      alt: 'Welding in a rustic setting',
       link: '/products?category=pottery',
-      title: 'Artisan Pottery Collections'
+      title: 'Artisan Welding Collections'
     },
     {
       src: '/images/slider/slide3.jpg',
@@ -512,15 +512,15 @@ export default async function Home() {
     },
     {
       src: '/images/slider/slide4.jpg',
-      alt: 'Wooden carvings and sculptures',
+      alt: 'Unique Handmade accessories',
       link: '/products?category=woodwork',
-      title: 'Intricate Wooden Masterpieces'
+      title: 'Unique Handmade Accessories'
     },
     {
       src: '/images/slider/slide5.jpg',
-      alt: 'Unique handmade accessories',
+      alt: 'Wooden carvings and sculptures',
       link: '/products?category=accessories',
-      title: 'Unique Handmade Accessories'
+      title: 'Intricate Wooden Masterpieces'
     },
   ];
 

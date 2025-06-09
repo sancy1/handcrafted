@@ -119,7 +119,7 @@ export default function AboutPage() {
       <div className="grid md:grid-cols-2 gap-12 items-center mb-20">
         <div className="relative aspect-[4/3] rounded-xl overflow-hidden shadow-lg">
           <Image
-            src="/images/artisans/crafting-process.jpg"
+            src="/images/about/ab3.jpg"
             alt="Artisan crafting process"
             fill
             className="object-cover"
@@ -190,7 +190,7 @@ export default function AboutPage() {
         <div className="grid md:grid-cols-3 gap-8">
           <div className="group relative overflow-hidden rounded-xl aspect-square">
             <Image
-              src="/images/artisans/woodworking-detail.jpg"
+              src="/images/about/ab1.jpg"
               alt="Woodworking detail"
               fill
               className="object-cover transition-transform duration-700 group-hover:scale-105"
@@ -201,7 +201,7 @@ export default function AboutPage() {
           </div>
           <div className="group relative overflow-hidden rounded-xl aspect-square">
             <Image
-              src="/images/artisans/textile-art.jpg"
+              src="/images/about/ab2.jpg"
               alt="Textile art"
               fill
               className="object-cover transition-transform duration-700 group-hover:scale-105"
@@ -212,7 +212,7 @@ export default function AboutPage() {
           </div>
           <div className="group relative overflow-hidden rounded-xl aspect-square">
             <Image
-              src="/images/artisans/pottery-wheel.jpg"
+              src="/images/about/ab7.jpg"
               alt="Pottery wheel"
               fill
               className="object-cover transition-transform duration-700 group-hover:scale-105"
@@ -250,7 +250,7 @@ export default function AboutPage() {
           </div>
           <div className="hidden md:block relative aspect-square">
             <Image
-              src="/images/artisans/community-image.jpg"
+              src="/images/about/ab6.jpg"
               alt="Artisan community"
               fill
               className="object-cover"

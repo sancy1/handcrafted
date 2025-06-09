@@ -424,7 +424,7 @@
 
 
 
-// src/app/(main)/artisans/list/page.tsx
+// src/app/(main)/meet-artisans/page.tsx
 
 'use client';
 
@@ -589,12 +589,12 @@ export default function ArtisanListPage() {
                   <span className="text-sm text-[#6C6C6C] ml-1">({artisan.totalSales || 0})</span>
                 </div>
 
-                <Link href={`/artisans/${artisan.userId}`}>
+                <Link href={`/meet-artisans/${artisan.userId}`}>
                   <Button
                     variant="outline"
                     className="border-[#B55B3D] text-[#B55B3D] hover:bg-[#F9F4EF] text-sm h-8 px-3"
                   >
-                    View Shop
+                    View Profile
                   </Button>
                 </Link>
               </div>

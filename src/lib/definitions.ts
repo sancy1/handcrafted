@@ -312,6 +312,8 @@ export interface Product {
   careInstructions: string | null;
   tags: any | null; // Consider making this 'string[] | null' if it's an array of strings
   searchVector: string | null;
+  averageRating: number; // Add this line
+  reviewCount: number;   // Add this line
   images: ProductImage[];
   reviews: Review[];
   seller?: {
@@ -362,7 +364,7 @@ export type ProductFormData = {
   careInstructions?: string | null;
   tags?: string | null;
   imageUrl?: string | null;
- isFeatured?: boolean; 
+  isFeatured?: boolean; 
   isActive?: boolean;   
 };
 // --- END OF CRUCIAL CHANGE ---
@@ -380,6 +382,31 @@ export const ProductFormSchema = z.object({
   tags: z.string().optional().nullable(),
   imageUrl: z.string().url('Must be a valid URL').optional().nullable(),
   // You might also need to add these to your Zod schema if you're validating them here
-  // isFeatured: z.boolean().optional(),
-  // isActive: z.boolean().optional(),
+  isFeatured: z.boolean().optional(),
+  isActive: z.boolean().optional(),
 });
+
+
+
+
+
+export interface ArtisanProfileForDisplay {
+  userId: string;
+  shopName: string;
+  bio: string | null;
+  location: string | null;
+  policies: string | null;
+  returnPolicy: string | null;
+  shippingInfo: string | null;
+  shopDescription: string | null;
+  website: string | null;
+  isTopArtisan: boolean;
+  totalSales: number;
+  createdAt: Date;
+  updatedAt: Date;
+  // These fields are merged from the associated User model for display
+  userName: string | null;
+  userEmail: string | null;
+  profileImageUrl: string | null;
+  phoneNumber: string | null; // Make sure this is also included from the User's Profile
+}

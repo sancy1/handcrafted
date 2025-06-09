@@ -84,8 +84,8 @@ export default function TopArtisanCard({ artisan }: { artisan: ArtisanProfileFor
           </p>
         )}
 
-        <Link href={`/artisans/${artisan.userId}`} className="inline-block bg-[#B55B3D] text-white px-6 py-2 rounded-md font-semibold hover:bg-[#9E4F37] transition-colors text-base">
-          View Shop
+        <Link href={`/meet-artisans/${artisan.userId}`} className="inline-block bg-[#B55B3D] text-white px-6 py-2 rounded-md font-semibold hover:bg-[#9E4F37] transition-colors text-base">
+          View Profile
         </Link>
       </div>
     </div>

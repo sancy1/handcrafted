@@ -1,5 +1,5 @@
 
-// src/app/dashboard/products/[productId]/edit/page.tsx
+// src/app/products/[productId]/edit/page.tsx
 
 'use client';
 

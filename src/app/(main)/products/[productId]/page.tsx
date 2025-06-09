@@ -1,4 +1,5 @@
 
+
 // src/app/(main)/products/[productId]/page.tsx
 
 import { fetchProductById } from '@/lib/data/products';

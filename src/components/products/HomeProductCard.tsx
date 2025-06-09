@@ -1,4 +1,5 @@
 
+
 // src/components/products/HomeProductCard.tsx
 
 import Image from 'next/image';
