@@ -1385,7 +1385,7 @@ export default function ArtisansPage() {
                   {averageProductRating.toFixed(1)}
                 </span>
                 {/* Review count can be fetched from the overall product review count for the artisan, or removed if not aggregated */}
-                <span className="text-sm text-[#6C6C6C] ml-2">({artisanProfile?.totalSales || 0} reviews)</span> 
+                {/* <span className="text-sm text-[#6C6C6C] ml-2">({artisanProfile?.totalSales || 0} reviews)</span>  */}
               </div>
             ) : (
               <p className="text-[#6C6C6C]">No products reviewed yet.</p>
